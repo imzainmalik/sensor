@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('device_token');
-            $table->integer('role');
+            $table->integer('role')->nullable()->comment('0. Super admin 1. property Owner 2. flat Owner');
             $table->rememberToken();
             $table->timestamps();
         });
