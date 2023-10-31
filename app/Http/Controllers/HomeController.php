@@ -31,6 +31,10 @@ class HomeController extends Controller
         }
     }
 
+    // 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
+
+
+    // pk_live_51NLZ6TFgUUrG0gUHEMN5K7fXQuw54klmylVVpwEblpMWf72x87WRkDSLCdaimOlGwjOujBJ7z3Hz1WlPYmdyf7hD00DY1KktMU
     /**
      * Show the application dashboard.
      *

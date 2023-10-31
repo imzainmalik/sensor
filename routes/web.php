@@ -32,7 +32,6 @@ Route::get('/toolkit', function () {
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/check_account_type', [HomeController::class, 'check_account_type'])->name('check_account_type');
 
-
 // SUPER ADMIN ROUTES
 Route::group(['middleware' => ['SuperAdmin']], function () {
     Route::get('/super-admin/dashboard', [AdminController::class, 'index'])->name('dashboard');

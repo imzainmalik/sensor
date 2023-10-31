@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('slug')->nullable();
             $table->unsignedBigInteger('sensor_type_id');
-            $table->string('device-code')->nullable();
-            $table->string('device-detail')->nullable();
+            $table->string('device_code')->nullable();
+            $table->string('device_detail')->nullable();
             $table->timestamps();
             $table->foreign('sensor_type_id')->references('id')->on('sensor_types')->onDelete('cascade');
         });
