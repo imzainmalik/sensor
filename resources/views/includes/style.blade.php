@@ -4,3 +4,10 @@
 <link rel="stylesheet" href="{{ asset('assets/css/custom.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
 <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/favicon.png') }}" />
+
+<style>
+   .custom_right_box{
+    height: auto;
+    overflow: scroll;
+   } 
+</style>
