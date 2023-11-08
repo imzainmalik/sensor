@@ -1,4 +1,4 @@
-<div class="panelBox widgets">
+<div class="panelBox widgets custom_right_box">
     <div class="panel_head bluethemeCol">
         <h3>Properties</h3>
     </div>

@@ -36,7 +36,6 @@ Route::get('/check_account_type', [HomeController::class, 'check_account_type'])
 Route::group(['middleware' => ['SuperAdmin']], function () {
     Route::get('/super-admin/dashboard', [AdminController::class, 'index'])->name('dashboard');
 }); 
-
 // PROPERTY OWNER ROUTES
 Route::prefix('property-owner')->middleware(['auth', 'PropertyOwner'])->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
