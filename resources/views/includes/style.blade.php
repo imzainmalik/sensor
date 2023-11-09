@@ -6,8 +6,12 @@
 <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/favicon.png') }}" />
 
 <style>
-   .custom_right_box{
+.custom_right_box{
     height: auto;
     overflow: scroll;
    } 
+.active{
+   font-size: 16px;
+    color: white;
+}
 </style>
