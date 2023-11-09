@@ -24,8 +24,14 @@
                         <span>2</span>
                     </a> --}}
                     <a class="themeBtn" href="javascript:;" title="">Contact Us</a>
-                    @if(Auth::check())
+                    @if(!Auth::check())
                         <a class="themeBtn" href="javascript:;" title="">Login</a>
+                        @else 
+                        <a href="{{ route('logout') }}" class="themeBtn" onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">Logout</a> 
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
                     @endif
                 </div>
             </div>
