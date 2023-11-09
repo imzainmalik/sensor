@@ -1,11 +1,21 @@
+@if(auth()->check())
 <div class="panelBox widgets custom_right_box">
     <div class="panel_head bluethemeCol">
         <h3>Properties</h3>
+        
     </div>
     <div class="panel_body">
         <ul class="scrollData">
-            <li>JBL Properties</li>
-            <li>Sunset Apartments</li>
+            
+           @forelse ($properties as $prop) 
+           <li><a href="{{ route('property.detail', $prop->id) }}" class="{{isset($app_property->id)  ?  $prop->id ==  $app_property->id ? 'active' : '' : '' }}">
+            {{ $prop->title }}
+        </a></li>
+           @empty 
+             <li>No Property Found</li>
+           @endforelse
+         
+            {{-- <li>Sunset Apartments</li>
             <li>Deluxe Villas</li>
             <li>Geo Condos</li>
             <li>JBL Properties</li>
@@ -32,7 +42,7 @@
             <li>Sunset Apartments</li>
             <li>Deluxe Villas</li>
             <li>Geo Condos</li>
-            <li>JBL Properties</li>
+            <li>JBL Properties</li> --}}
         </ul>
     </div>
 </div>
@@ -123,3 +133,4 @@
         </ul>
     </div>
 </div>
+@endif
