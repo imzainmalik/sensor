@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\SuperAdmin\AdminController;
+use App\Http\Controllers\PropertyOwner\PropertyController;
+use App\Http\Controllers\AppartmentOwner\AppartmentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,11 +42,15 @@ Route::prefix('super-admin')->middleware(['auth', 'SuperAdmin'])->group(function
 }); 
 // PROPERTY OWNER ROUTES
 Route::prefix('property-owner')->middleware(['auth', 'PropertyOwner'])->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('propertyowner.dashboard');
+    Route::get('/dashboard', [PropertyController::class, 'index'])->name('propertyowner.dashboard');
+    Route::get('/property-detail/{id}', [PropertyController::class, 'property_detail'])->name('propertyowner.property.detail');
+    Route::get('/appartment-detail/{id}', [PropertyController::class, 'appartment_detail'])->name('propertyowner.appartment.detail');
 });
 
 
 // // FLAT OWNER ROUTES
 Route::prefix('flat-owner')->middleware(['auth', 'Flatowner'])->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('flatowner.dashboard');
+    Route::get('/dashboard', [AppartmentController::class, 'index'])->name('flatowner.dashboard');
+    Route::get('/property-detail/{id}', [AppartmentController::class, 'property_detail'])->name('flatowner.property.detail');
+    Route::get('/appartment-detail/{id}', [AppartmentController::class, 'appartment_detail'])->name('flatowner.appartment.detail');
 });
