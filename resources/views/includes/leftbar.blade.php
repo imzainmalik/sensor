@@ -8,9 +8,22 @@
         <ul class="scrollData">
             
            @forelse ($properties as $prop) 
+           @if(auth()->user()->role == 0)
            <li><a href="{{ route('property.detail', $prop->id) }}" class="{{isset($app_property->id)  ?  $prop->id ==  $app_property->id ? 'active' : '' : '' }}">
             {{ $prop->title }}
         </a></li>
+        @elseif(auth()->user()->role == 1)
+           <li><a href="{{ route('propertyowner.property.detail', $prop->id) }}" class="{{isset($app_property->id)  ?  $prop->id ==  $app_property->id ? 'active' : '' : '' }}">
+            {{ $prop->title }}
+        </a></li>
+        @else
+        <li><a href="{{ route('flatowner.property.detail', $prop->id) }}" class="{{isset($app_property->id)  ?  $prop->id ==  $app_property->id ? 'active' : '' : '' }}">
+            {{ $prop->title }}
+        </a></li>
+        {{-- <li><a href="{{ route('property.detail', $prop->id) }}" class="{{isset($app_property->id)  ?  $prop->id ==  $app_property->id ? 'active' : '' : '' }}">
+            {{ $prop->title }}
+        </a></li> --}}
+        @endif
            @empty 
              <li>No Property Found</li>
            @endforelse

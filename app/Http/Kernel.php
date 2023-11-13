@@ -68,8 +68,8 @@ class Kernel extends HttpKernel
 
 
         'SuperAdmin' => \App\Http\Middleware\SuperAdmin::class,
-        'PropertyOwner' => \Illuminate\Routing\Middleware\PropertyOwner::class,
-        'Flatowner' => \Illuminate\Auth\Middleware\Flatowner::class,
+        'PropertyOwner' => \App\Http\Middleware\PropertyOwner::class,
+        'Flatowner' => \App\Http\Middleware\Flatowner::class,
     ];
 
     protected $routeMiddleware = [
