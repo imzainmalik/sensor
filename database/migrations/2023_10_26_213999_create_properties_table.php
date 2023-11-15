@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('slug');
             $table->string('address')->nullable();
             $table->bigInteger('phone')->nullable();
             $table->unsignedBigInteger('user_id');

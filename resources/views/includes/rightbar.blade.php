@@ -2,7 +2,14 @@
        @if(auth()->check())
 <div class="rightbx">
     <div class="panel_head bluethemeCol">
-        <h3>Appartments </h3>
+        <h3>Appartments 
+            @if(auth()->user()->role == 0)
+            <span><a href="{{ route('appartment.create') }}"><i class="fa-solid fa-plus" style="color: #ffffff;"></i></a></span>
+            @elseif(auth()->user()->role == 1)
+            <span><a href="{{ route('propertyowner.appartment.create') }}"><i class="fa-solid fa-plus" style="color: #ffffff;"></i></a></span>
+            @else
+            @endif
+        </h3>
         {{-- Canvas --}}
     </div>
     <ul class="listbtn">
@@ -10,10 +17,13 @@
             @if (  auth()->user()->role == 0) 
                 <li>
                     <a href="{{ route('appartment.detail', $appart->id) }}" class="{{ isset($appartment->id) ? $appart->id == $appartment->id ? 'active' : '' : ''}}">{{ $appart->name }}</a>
+                    <h6><a href="{{ route('appartment.edit', $appart->id) }}">Edit</a></h6>
                 </li>
+                
             @elseif( auth()->user()->role == 1)
                 <li>
                     <a href="{{ route('propertyowner.appartment.detail', $appart->id) }}" class="{{ isset($appartment->id) ? $appart->id == $appartment->id ? 'active' : '' : ''}}">{{ $appart->name }}</a>
+                    <h6><a href="{{ route('propertyowner.appartment.edit', $appart->id) }}">Edit</a></h6>
                 </li>
             @else 
                 <li>

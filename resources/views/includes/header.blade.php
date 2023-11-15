@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2 text-center">
-                <a href="javascript:;" title="">
+                <a href="{{ route('check_account_type') }}" title="">
                     <img src="{{ asset('assets/images/logo.webp')}}" alt="">
                 </a>
             </div>
@@ -25,8 +25,15 @@
                     </a> --}}
                     <a class="themeBtn" href="javascript:;" title="">Contact Us</a>
                     @if(!Auth::check())
-                        <a class="themeBtn" href="javascript:;" title="">Login</a>
-                        @else 
+                    <a class="themeBtn" href="javascript:;" title="">Login</a>
+                    @else 
+                    @if(auth()->user()->role == 0)
+                    <a class="themeBtn" href="{{ route('device.create') }}" title="">Add Device</a>
+                    @elseif(auth()->user()->role == 1)
+                    <a class="themeBtn" href="{{ route('propertyowner.device.create') }}" title="">Add Device</a>
+                    @else
+                    <a class="themeBtn" href="{{ route('flatowner.device.create') }}" title="">Add Device</a>
+                    @endif
                         <a href="{{ route('logout') }}" class="themeBtn" onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">Logout</a> 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
