@@ -4,6 +4,9 @@
 <link rel="stylesheet" href="{{ asset('assets/css/custom.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
 <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/favicon.png') }}" />
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0- 
+alpha/css/bootstrap.css" rel="stylesheet">
 
 <style>
 .custom_right_box{
@@ -15,3 +18,5 @@
     color: white;
 }
 </style>
+
+@stack('custom_css')

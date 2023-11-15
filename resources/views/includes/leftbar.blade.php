@@ -1,9 +1,16 @@
 @if(auth()->check())
 <div class="panelBox widgets custom_right_box">
     <div class="panel_head bluethemeCol">
-        <h3>Properties</h3>
+       
+          
         
-    </div>
+        <h3>Properties 
+           
+            @if(auth()->user()->role == 0)
+            <span><a href="{{ route('property.create') }}"><i class="fa-solid fa-plus" style="color: #ffffff;"></i></a></span>
+            @endif
+        </h3>
+        </div>
     <div class="panel_body">
         <ul class="scrollData">
             
@@ -11,7 +18,8 @@
            @if(auth()->user()->role == 0)
            <li><a href="{{ route('property.detail', $prop->id) }}" class="{{isset($app_property->id)  ?  $prop->id ==  $app_property->id ? 'active' : '' : '' }}">
             {{ $prop->title }}
-        </a></li>
+        </a>
+    <h6><a href="{{ route('property.edit', $prop->id) }}">Edit</a></h6></li>
         @elseif(auth()->user()->role == 1)
            <li><a href="{{ route('propertyowner.property.detail', $prop->id) }}" class="{{isset($app_property->id)  ?  $prop->id ==  $app_property->id ? 'active' : '' : '' }}">
             {{ $prop->title }}
@@ -82,7 +90,7 @@
     </div>
 </div>
 
-<div class="panelBox widgets">
+{{-- <div class="panelBox widgets">
     <div class="panel_head bluethemeCol">
         <h3>Property Watch</h3>
     </div>
@@ -102,7 +110,7 @@
             </div>
         </form>
     </div>
-</div>
+</div> --}}
 
 <div class="panelBox widgets">
     <div class="panel_head bluethemeCol">

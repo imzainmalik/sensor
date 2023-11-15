@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\AppartmentOwner;
+namespace App\Http\Controllers\PropertyOwner;
 
 use App\Models\Property;
 use App\Models\Appartment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class AppartmentController extends Controller
+class PropertyOwnerController extends Controller
 {
 
     public function __construct()
@@ -20,30 +20,31 @@ class AppartmentController extends Controller
             $properties_ids = $properties->pluck('id')->toArray();  
             $property_first = property::where('user_id', auth()->user()->id )->first();         
             $appartments = Appartment::where('property_id', $properties_ids)->get(); 
-    
-        return view('appartment.index',compact('appartments', 'property_first', 'properties'));
+        return view('propertyOwner.index',compact('appartments', 'property_first', 'properties'));
     }
     
     public function property_detail($id){   
          $properties = property::where('user_id', auth()->user()->id )->get();     
          $app_property = property::find($id);   
          $appartments = Appartment::where('property_id' , $app_property->id)->get();
-        return view('appartment.index', compact('appartments', 'app_property', 'properties' ));
+        return view('propertyOwner.index', compact('appartments', 'app_property', 'properties' ));
     }
 
     public function appartment_detail($id){
-        
         $properties = property::where('user_id', auth()->user()->id )->get();  
          $appartment = Appartment::find($id);   
          $app_property = Property::find($appartment->property_id); 
          $appartments = Appartment::where('property_id' , $app_property ->id)->get(); 
-        return view('property.index', compact('appartments', 'appartment', 'app_property' ,'properties'));
+
+
+
+        return view('propertyOwner.index', compact('appartments', 'appartment', 'app_property' ,'properties'));
     }
 
 
     public function create()
     {
-        //
+        
     }
 
     /**
