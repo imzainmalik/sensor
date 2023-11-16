@@ -28,6 +28,7 @@
                     <a class="themeBtn" href="javascript:;" title="">Login</a>
                     @else 
                     @if(auth()->user()->role == 0)
+                    <a class="themeBtn" href="{{ route('user.index') }}" title="">Add User</a>
                     <a class="themeBtn" href="{{ route('device.create') }}" title="">Add Device</a>
                     @elseif(auth()->user()->role == 1)
                     <a class="themeBtn" href="{{ route('propertyowner.device.create') }}" title="">Add Device</a>

@@ -7,6 +7,7 @@ use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\AppartmentController;
 use App\Http\Controllers\SensorDeviceController;
 use App\Http\Controllers\SuperAdmin\AdminController;
+use App\Http\Controllers\SuperAdmin\UserController;
 use App\Http\Controllers\PropertyOwner\PropertyOwnerController;
 use App\Http\Controllers\AppartmentOwner\AppartmentOwnerController;
 /*
@@ -60,6 +61,13 @@ Route::prefix('super-admin')->middleware(['auth', 'SuperAdmin'])->group(function
      Route::post('/device/store', [SensorDeviceController::class, 'store'])->name('device.store');
      Route::get('/device/edit/{id}', [SensorDeviceController::class, 'edit'])->name('device.edit');
     //Device Routes End
+ 
+    //User Routes Start
+     Route::get('/user/index', [UserController::class, 'index'])->name('user.index');
+     Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
+     Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
+     Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+    //User Routes End
 
 }); 
 
@@ -103,4 +111,6 @@ Route::prefix('flat-owner')->middleware(['auth', 'Flatowner'])->group(function (
 
 // Route::middleware(['auth'])->group(function () {
     Route::any('/webhook/{code}', [SensorDeviceController::class, 'webhook'])->name('webhook');
+    Route::get('/user/{id}/password', [UserController::class, 'cofigure_password'])->name('user.cofigure_password');
+    Route::post('/user/password', [UserController::class, 'cofigure_password_post'])->name('user.cofigure_password.post');
 // });

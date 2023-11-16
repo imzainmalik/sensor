@@ -30,7 +30,8 @@ class AppServiceProvider extends ServiceProvider
 
             // }
         $properties = property::get();    
-        View::share(['properties' =>$properties]); 
+        $appartments = Appartment::get();    
+        View::share(['properties' =>$properties, 'appartments' => $appartments]); 
         //
     }
 }

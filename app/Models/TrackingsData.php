@@ -12,7 +12,7 @@ class TrackingsData extends Model
 {
     use HasFactory;
  
-    protected $fillable = ['name', 'value', 'type', 'unit_id', 'unit', 'created_at', 'updated_at'];
+    protected $guarded = [];
 
   
 }

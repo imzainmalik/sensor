@@ -15,6 +15,16 @@
                 @endif
             </div>
         </div>
+        <div class="row crud">
+            <div class=" col-md-12">
+                @if( $device)
+                <h2>Update Device</h2>
+                @else
+                <h2>Create Device</h2>
+                @endif
+            </div>
+        </div>
+        <br>
         <div class="row">
             <div class=" col-md-12">
                 @if(auth()->user()->role == 0)
