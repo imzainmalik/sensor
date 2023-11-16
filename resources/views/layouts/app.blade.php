@@ -12,7 +12,7 @@
     <div id="app">
         @include('includes.header')
         <section class="mmbody">
-            <div class="container-fluid">
+            <div class="container-fluid">   
                 <div class="row">
                     @if(Auth::check())
                     <div class="col-md-3 col-xl-2">
