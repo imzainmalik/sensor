@@ -20,7 +20,6 @@
                 @endif
             </div>
         </div>
-        
         <br>
         <div class="row">
             <div class=" col-md-12">
@@ -35,7 +34,7 @@
                 <div class="">
                   <label for="password_confirmation">Confirm Password</label>
                   <input type="password" class="form-control pp" id="password_confirmation" name="password_confirmation">
-                  <input type="checkbox" id="check">Show Password
+                  <input type="checkbox" id="check"> <label for="check">Show Password</label>
                 </div>
                 <br>
                 

@@ -111,6 +111,6 @@ Route::prefix('flat-owner')->middleware(['auth', 'Flatowner'])->group(function (
 
 // Route::middleware(['auth'])->group(function () {
     Route::any('/webhook/{code}', [SensorDeviceController::class, 'webhook'])->name('webhook');
-    Route::get('/user/{id}/password', [UserController::class, 'cofigure_password'])->name('user.cofigure_password');
+    Route::get('/user/password/{id}', [UserController::class, 'cofigure_password'])->name('user.cofigure_password');
     Route::post('/user/password', [UserController::class, 'cofigure_password_post'])->name('user.cofigure_password.post');
 // });
