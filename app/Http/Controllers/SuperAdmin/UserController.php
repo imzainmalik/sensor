@@ -52,7 +52,7 @@ class UserController extends Controller
         //
         $validated = $request->validate([
             'name' => 'required',
-            'email' => 'required',
+            'email' => 'required|unique:users',
             'role' => 'required',
         ]);
             if($request->id){
@@ -98,8 +98,11 @@ class UserController extends Controller
     {
         $user = User::where('id',$id)->first();
         if(!$user){
-            abort(403);
+            abort(404);
         } 
+        if($user->pass_status == 1){
+                abort(404);
+        }
         return view('superadmin.users.cofigure_password', get_defined_vars());
     }
     public function cofigure_password_post(Request $request)
@@ -113,6 +116,7 @@ class UserController extends Controller
         $user = User::find($request->id);
         if($user){
           $user->password = Hash::make($request->password);
+          $user->pass_status = 1;
           $user->save();
           return redirect()->route('check_account_type')->with('message', 'Password Update Successfully');
         } else{
