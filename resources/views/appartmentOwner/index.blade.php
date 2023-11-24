@@ -15,18 +15,14 @@
                                     <i class="fal fa-city"></i>
                                 </div>
                    
-                                <select name="" id="">
+                                {{-- <select name="" id="">
                                     @forelse ($properties as $property)
                                     <option selected disabled value="">Select Properties</option>
                                     <option value="{{ $property->id }}">{{ $property->title }}</option>
                                     @empty 
                                     <option selected disabled value="">Select Properties</option>
                                     @endforelse
-                                    {{-- <option value="">JBL Properties</option>
-                                    <option value="">Sunset Apartments</option>
-                                    <option value="">Deluxe Villas</option>
-                                    <option value="">Geo Condos</option> --}}
-                                </select>
+                                </select> --}}
                             </div>
                         </div>
                         <div id="chart">
@@ -75,9 +71,7 @@
                                 <div class="selectPos">
                                     <i class="fal fa-city"></i>
                                 </div>
-                                <select name="" id="">
-                                    {{-- <option selected disabled value="">Select Properties</option> --}}
-                                    
+                                {{-- <select name="" id="">   
                                   @forelse ($properties as $property) 
                                   <option selected disabled value="">Select Properties</option>
                                       <option value="{{ $property->id }}">{{ $property->title }}</option>
@@ -85,10 +79,7 @@
                                   <option selected disabled value="">Select Properties</option>
                                   
                                   @endforelse
-                                    {{-- <option value="">Sunset Apartments</option>
-                                    <option value="">Deluxe Villas</option>
-                                    <option value="">Geo Condos</option> --}}
-                                </select>
+                                </select> --}}
                             </div>
                         </div>
                         <div id="chart1"></div>

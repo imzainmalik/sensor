@@ -5,9 +5,9 @@
 <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
 <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/favicon.png') }}" />
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-{{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.css" rel="stylesheet"> --}}
 <link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
 
 <style>
 .custom_right_box{
@@ -21,6 +21,10 @@
 
 .crud h2{
     color: white;
+}
+.daterangepicker {
+    width: auto;
+    color: black;
 }
 </style>
 

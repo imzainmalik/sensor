@@ -16,11 +16,13 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->unsignedBigInteger('sensor_type_id');
             $table->unsignedBigInteger('appartment_id');
+            $table->unsignedBigInteger('property_id');
             $table->string('device_code')->nullable();
             $table->string('device_detail')->nullable();
             $table->string('webhook_url')->nullable();
             $table->timestamps();
             $table->foreign('sensor_type_id')->references('id')->on('sensor_types')->onDelete('cascade');
+            $table->foreign('property_id')->references('id')->on('properties')->onDelete('cascade');
             $table->foreign('appartment_id')->references('id')->on('appartments')->onDelete('cascade');
         });
     }
