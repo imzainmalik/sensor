@@ -49,6 +49,10 @@ Route::prefix('super-admin')->middleware(['auth', 'SuperAdmin'])->group(function
     Route::post('/property/store', [PropertyController::class, 'store'])->name('property.store');
     Route::get('/property/edit/{id}', [PropertyController::class, 'edit'])->name('property.edit');
     //property Routes End
+
+
+    // Ajax Request
+    Route::post('/water_ajax', [AdminController::class, 'water_ajax'])->name('water.ajax');
     
     //Appartment Routes start
     Route::get('/appartment/create', [AppartmentController::class, 'create'])->name('appartment.create');

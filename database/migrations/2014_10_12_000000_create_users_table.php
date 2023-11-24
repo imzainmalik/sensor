@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('pass_change')->default(0)->nullable()->comment('0. unExpire Link 1. Expire Link');
             $table->string('device_token')->nullable();
             $table->integer('role')->nullable()->comment('0. Super admin 1. property Owner 2. flat Owner');
             $table->rememberToken();

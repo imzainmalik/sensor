@@ -55,18 +55,28 @@ class SensorDeviceController extends Controller
             'webhook_url' => 'required',
 
         ]);
+            $appartment = Appartment::find($validated['appartment_id']);
             if($request->id){
                $device = SensorDevice::find($request->id);
                $device->name = $validated['name'];
                $device->device_code = $validated['device_code'];
                $device->appartment_id = $validated['appartment_id'];
+               $device->property_id = $appartment->property_id;
                $device->sensor_type_id = $validated['sensor_type_id'];
                $device->device_detail = $validated['device_detail'];
-               $device->webhook = $validated['webhook'];
+               $device->webhook_url = $validated['webhook_url'];
                $device->save();
                $notification = "Device Update Successfully";
             }else{
-                SensorDevice::create($validated);
+                $device = new SensorDevice();
+                $device->name = $validated['name'];
+                $device->device_code = $validated['device_code'];
+                $device->appartment_id = $validated['appartment_id'];
+                $device->property_id = $appartment->property_id;
+                $device->sensor_type_id = $validated['sensor_type_id'];
+                $device->device_detail = $validated['device_detail'];
+                $device->webhook_url = $validated['webhook_url'];
+                $device->save();
                 $notification = "Device Create Successfully";
             }
 

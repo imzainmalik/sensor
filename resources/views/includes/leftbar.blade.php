@@ -74,18 +74,27 @@
     </div>
     <div class="panel_body">
         <form action="">
-            <div class="form-group">
-                <input type="checkbox" id="Water">
-                <label for="Water">Water</label>
+            <li><a href="{{ Request::url().'?filter=Energy'}}" class="{{isset($request['filter'])  ?  $request['filter'] ==  'Energy' ?  'active' : '' : '' }}">
+                Energy
+            </a></li>
+            <li><a href="{{ Request::url().'?filter=Gas'}}" class="{{isset($request['filter'])  ?  $request['filter'] ==  'Gas' ?  'active' : '' : '' }}">
+                Gas
+            </a></li>
+            <li><a href="{{ Request::url().'?filter=Water'}}" class="{{isset($request['filter'])  ?  $request['filter'] ==  'Water' ?  'active' : '' : 'active' }}">
+                Water
+            </a></li>
+            {{-- <div class="form-group">
+                <input type="checkbox" id="Water" name="ch" {{isset($request['filter'])  ?  $request['filter'] ==  'Water' ?  'checked' : '' : 'checked' }}>
+                <label for="Water" ><a href="{{ Request::url().'?filter=Water'}}">Water</a></label>
             </div>
             <div class="form-group">
-                <input type="checkbox" id="Energy">
-                <label for="Energy">Energy</label>
+                <input type="checkbox" id="Energy" name="ch" {{isset($request['filter'])  ?  $request['filter'] ==  'Energy' ?  'checked' : '' : '' }}>
+                <label for="Energy"><a href="{{ Request::url().'?filter=Energy'}}">Energy</a></label>
             </div>
             <div class="form-group">
-                <input type="checkbox" id="Gas">
-                <label for="Gas">Gas</label>
-            </div>
+                <input type="checkbox" id="Gas" name="ch"  {{isset($request['filter'])  ?  $request['filter'] ==  'Gas' ?  'checked' : '' : '' }}>
+                <label for="Gas"><a href="{{ Request::url().'?filter=Water'}}">Gas</a></label>
+            </div> --}}
         </form>
     </div>
 </div>
@@ -112,7 +121,7 @@
     </div>
 </div> --}}
 
-<div class="panelBox widgets">
+{{-- <div class="panelBox widgets">
     <div class="panel_head bluethemeCol">
         <h3>Alerts</h3>
     </div>
@@ -140,8 +149,8 @@
             </div>
         </form>
     </div>
-</div>
-
+</div> --}}
+{{-- 
 <div class="panelBox widgets">
     <div class="panel_head bluethemeCol">
         <h3>Financial Reports</h3>
@@ -153,5 +162,5 @@
             <li>Gas Reports</li>
         </ul>
     </div>
-</div>
+</div> --}}
 @endif
