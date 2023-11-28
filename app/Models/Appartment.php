@@ -14,4 +14,9 @@ class Appartment extends Model
     protected $guarded = [];
 
 
+    public function sensor_devices()
+    {
+        return $this->hasOne(SensorDevice::class);
+    }
+
 }

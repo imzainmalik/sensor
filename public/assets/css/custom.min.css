@@ -198,7 +198,7 @@ header{ background: var(--gary-dark-color); padding: 1rem 1rem;  }
 .panelBox{ background: var(--gary-dark-color); margin-bottom: 1.5rem; }
 .panel_head{ padding: 1rem 1.4rem;  }
 .panel_head h3{ font-size: 1.125rem; font-weight: 600; color: var(--white); margin-bottom: 0; }
-.panel_body{ padding: 1rem 1.5rem; }
+.panel_body{ padding: 1rem 1.5rem; overflow: hidden; position: relative; }
 .panel_body ul li{ font-size: 0.95rem;  padding: 3px 0; }
 .scrollData{ height: 230px; }
 
@@ -212,7 +212,7 @@ header{ background: var(--gary-dark-color); padding: 1rem 1rem;  }
 .rightbx .panel_head{  margin-bottom: 1rem; }
 .listbtn li{ background: var(--gary-dark-color);  padding: 1rem 1.4rem; margin-bottom: 1rem; }
 .listbtn li p{ font-size: 1.125rem; color: var(--white); margin-bottom: 0; }
-.minheightSet{ min-height: 498px; }
+.minheightSet{ min-height: auto; }
 .det_1 p{ color: var(--white); font-weight: 600; font-size: 0.85rem; }
 
 .dv_alerts .panel_head{ margin-bottom: 1rem; }
@@ -274,3 +274,58 @@ span.apexcharts-legend-text{ color: #fff !important;  font-family: 'Poppins', sa
 .selectTT select{background: transparent;border: none;outline: none;color: #fff;font-size: 13px;height: 100%;width: 100%;padding: 5px 35px; padding-left: 40px; -webkit-appearance: none; }
 .selectTT select option{ color: var(--black); }
 .selectTT:before{ content: '\f107'; font-family: 'Font Awesome 5 Pro'; font-weight: 300; font-size: 25px; color: var(--green-color); position: absolute; right: 10px; z-index: -1; }
+.custom_right_box{
+    height: auto;
+    overflow: scroll;
+   } 
+.active{
+   font-size: 16px;
+    color: #00C17B;
+}
+.btn-success {
+    color: #fff !important;
+    background-color: #00C17B !important;
+    border-color: #00C17B !important;
+}
+
+.btn-primary {
+    color: #fff !important;
+    background-color: #00337C !important;
+    border-color: #00337C !important;
+}
+
+.crud h2{
+    color: white;
+}
+.daterangepicker {
+    width: auto;
+    color: black;
+}
+.btn-rght{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.preloader 
+{
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 99999999999;
+    background: url('/assets/images/4.gif') 50% 50% no-repeat rgb(0, 0, 0);
+    opacity: 1;
+}
+.ajaxloader {
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+    top: 0;
+    left: 0;
+    right: 0;
+    /* bottom: 0; */
+    background: url('/assets/images/4.gif') 50% 50% no-repeat rgb(0, 0, 0);
+    opacity: 1;
+    position: absolute;
+}

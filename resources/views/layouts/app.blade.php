@@ -10,6 +10,8 @@
 
 <body>
     <div id="app">
+        <div id="preloaders" class="preloader"></div>
+    
         @include('includes.header')
         <section class="mmbody">
             <div class="container-fluid">   
@@ -30,8 +32,10 @@
             </div>
         </section>
 
-        @include ('includes/scripts')
-        <script>
+    @include ('includes/scripts')
+        
+    <script>
+            
             @if(Session::has('message'))
             toastr.options =
             {

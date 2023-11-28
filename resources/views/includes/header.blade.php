@@ -23,18 +23,19 @@
                         <i class="fal fa-bell"></i>
                         <span>2</span>
                     </a> --}}
-                    <a class="themeBtn" href="javascript:;" title="">Contact Us</a>
+                    
                     @if(!Auth::check())
-                    <a class="themeBtn" href="javascript:;" title="">Login</a>
+                    {{-- <a class="themeBtn" href="javascript:;" title="">Login</a> --}}
                     @else 
                     @if(auth()->user()->role == 0)
-                    <a class="themeBtn" href="{{ route('user.index') }}" title="">Add User</a>
-                    <a class="themeBtn" href="{{ route('device.create') }}" title="">Add Device</a>
+                    <a class="themeBtn" href="{{ route('user.index') }}" title="">Users</a>
+                    <a class="themeBtn" href="{{ route('device.index') }}" title="">Devices</a>
                     @elseif(auth()->user()->role == 1)
-                    <a class="themeBtn" href="{{ route('propertyowner.device.create') }}" title="">Add Device</a>
+                    <a class="themeBtn" href="{{ route('propertyowner.device.index') }}" title="">Device</a>
                     @else
-                    <a class="themeBtn" href="{{ route('flatowner.device.create') }}" title="">Add Device</a>
+                    {{-- <a class="themeBtn" href="{{ route('flatowner.device.index') }}" title="">Devices</a> --}}
                     @endif
+                    {{-- <a class="themeBtn" href="javascript:;" title="">Contact Us</a> --}}
                         <a href="{{ route('logout') }}" class="themeBtn" onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">Logout</a> 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

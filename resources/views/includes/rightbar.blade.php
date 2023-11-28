@@ -1,32 +1,31 @@
 
        @if(auth()->check())
 <div class="rightbx">
-    <div class="panel_head bluethemeCol">
-        <h3>Appartments 
+    <div class="panel_head bluethemeCol btn-rght">
+        <h3>Appartments</h3>
             @if(auth()->user()->role == 0)
-            <span><a href="{{ route('appartment.create') }}"><i class="fa-solid fa-plus" style="color: #ffffff;"></i></a></span>
+            <span><a href="{{ route('appartment.create') }}" class="edit btn btn-success btn-sm "><i class="fa fa-plus" aria-hidden="true"></i></a></span>
             @elseif(auth()->user()->role == 1)
-            <span><a href="{{ route('propertyowner.appartment.create') }}"><i class="fa-solid fa-plus" style="color: #ffffff;"></i></a></span>
+            <span><a href="{{ route('propertyowner.appartment.create') }}" class="edit btn btn-success btn-sm"><i class="fa fa-plus" aria-hidden="true"></i></a></span>
             @else
             @endif
-        </h3>
         {{-- Canvas --}}
     </div>
     <ul class="listbtn">
         @forelse ($appartments as $appart) 
             @if (  auth()->user()->role == 0) 
-                <li>
-                    <a href="{{ route('appartment.detail', $appart->id) }}" class="{{ isset($appartment->id) ? $appart->id == $appartment->id ? 'active' : '' : ''}}">{{ $appart->name }}</a>
-                    <h6><a href="{{ route('appartment.edit', $appart->id) }}">Edit</a></h6>
+                <li class="btn-rght">
+                    <a href="{{ route('appartment.detail', $appart->id) }}" class="{{ isset($appartment->id) ? $appart->id == $appartment->id ? 'active' : '' : ''}} ">{{ $appart->name }}</a>
+                   <a href="{{ route('appartment.edit', $appart->id) }} " class="edit btn btn-success btn-sm" ><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 </li>
                 
             @elseif( auth()->user()->role == 1)
-                <li>
+                <li class="btn-rght">
                     <a href="{{ route('propertyowner.appartment.detail', $appart->id) }}" class="{{ isset($appartment->id) ? $appart->id == $appartment->id ? 'active' : '' : ''}}">{{ $appart->name }}</a>
-                    <h6><a href="{{ route('propertyowner.appartment.edit', $appart->id) }}">Edit</a></h6>
+                    <a href="{{ route('propertyowner.appartment.edit', $appart->id) }}" class="edit btn btn-success btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 </li>
             @else 
-                <li>
+                <li class="btn-rght">
                     <a href="{{ route('flatowner.appartment.detail', $appart->id) }}" class="{{ isset($appartment->id) ? $appart->id == $appartment->id ? 'active' : '' : ''}}">{{ $appart->name }}</a>
                 </li>
             
