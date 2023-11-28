@@ -1,35 +1,33 @@
 @extends('layouts.app')
 @section('content')
+
 <div class="col-md-7 col-xl-8">
     <div class="row">
-        <div class="col-md-12 crud">
-            <h2>Users List</h2>
-        </div>
-    </div>
-    <br>
-    <div class="row">
         <div class="col-md-12">
-           <a href="{{ route('user.create') }}" class="edit btn btn-primary btn-sm">Create User</a>
+            <div class="panelBox widgets minheightSet">
+                <div class="panel_head greenthemeCol btn-rght">
+                    <h3>User List</h3>
+                    <a href="{{ route('user.create') }}" class="edit btn btn-primary btn-sm ">Add User</a>
+                </div>
+                <div class="panel_body">
+                    <table class="table table-bordered data-table" style="color:white">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th width="100px">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
-    <br>
-    <div class="row">
-        <div class="col-md-12">
-            <table class="table table-bordered data-table" style="color:white">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th width="100px">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
-    </div>
+ 
 </div>
 @push('custum_js')
 <script type="text/javascript">

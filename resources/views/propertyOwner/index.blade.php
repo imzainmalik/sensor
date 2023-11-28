@@ -9,48 +9,42 @@
                     </div>
                     <div class="panel_body">
                         <div class="chartTitle">
-                            <h3><span><i class="fal fa-water-rise"></i></span> Water Consumption</h3>
-                            <div class="selectTT">
-                                <div class="selectPos">
-                                    <i class="fal fa-city"></i>
-                                </div>
-                   
-                                <select name="" id="">
-                                    @forelse ($properties as $property)
-                                    <option selected disabled value="">Select Properties</option>
-                                    <option value="{{ $property->id }}">{{ $property->title }}</option>
-                                    @empty 
-                                    <option selected disabled value="">Select Properties</option>
-                                    @endforelse
-                                    {{-- <option value="">JBL Properties</option>
-                                    <option value="">Sunset Apartments</option>
-                                    <option value="">Deluxe Villas</option>
-                                    <option value="">Geo Condos</option> --}}
-                                </select>
-                            </div>
+                            @php
+                                $filter = 'Water';
+                                if(isset($request['filter'])){
+                                    if($request['filter'] == 'Energy') {
+                                        $filter = 'Energy';
+                                    }elseif($request['filter'] == 'Gas'){
+                                        $filter = 'Gas';
+                                    }else{
+                                        $filter = 'Water';
+                                    }
+                                }
+                            @endphp
+                            <h3><span><i class="fal fa-water-rise"></i></span>  {{  $filter }} Consumption</h3>
+                            <input type="text" name="datetimes" />
+                            <input type="hidden" id="startDate" name="start_date" value=""/>
+                            <input type="hidden" id="endDate" name="end_date" value=""/>
+                            <input type="hidden" id="filter" name="filter" value="{{ $filter }}"/>
+                         
                         </div>
                         <div id="chart">
                             <div class="chartstabs">
                                 <div class="toolbar">
-                                    <button id="daily">Daily</button>
-                                    <button id="weekly">Weekly</button>
-                                    <button id="monthly" class="active">Monthly</button>
-                                    <button id="yearly">Yearly</button>
+                                    <button id="daily" value="daily">Daily</button>
+                                    <button id="weekly" value="weekly" class="active">Weekly</button>
+                                    <button id="monthly" value="monthly" >Monthly</button>
+                                    <button id="yearly" value="yearly">Yearly</button>
                                 </div>
                                 <div class="selectSt">
-                                    <input id="datepicker" placeholder="Select Date" />
-                                    <div class="arrowD">
-                                        <i class="fal fa-angle-down"></i>
-                                    </div>
                                 </div>
                             </div>
                             <div id="chart-timeline"></div>
                         </div>
-
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            {{-- <div class="col-md-6">
                 <div class="panelBox widgets minheightSet">
                     <div class="panel_head greenthemeCol">
                         <h3>Property Watch</h3>
@@ -62,8 +56,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6">
+            </div> --}}
+            {{-- <div class="col-md-6">
                 <div class="panelBox widgets minheightSet">
                     <div class="panel_head greenthemeCol">
                         <h3>Financials</h3>
@@ -76,7 +70,6 @@
                                     <i class="fal fa-city"></i>
                                 </div>
                                 <select name="" id="">
-                                    {{-- <option selected disabled value="">Select Properties</option> --}}
                                     
                                   @forelse ($properties as $property) 
                                   <option selected disabled value="">Select Properties</option>
@@ -85,16 +78,13 @@
                                   <option selected disabled value="">Select Properties</option>
                                   
                                   @endforelse
-                                    {{-- <option value="">Sunset Apartments</option>
-                                    <option value="">Deluxe Villas</option>
-                                    <option value="">Geo Condos</option> --}}
                                 </select>
                             </div>
                         </div>
                         <div id="chart1"></div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <div class="col-md-3">
                 <div class="dv_alerts">
                     <div class="panel_head bluethemeCol">
@@ -192,4 +182,17 @@
             </div>
         </div>
     </div>
+    @push('custum_js')
+    <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+   
+    <script>
+        $(window).on('load',function() {
+             $('.toolbar .active').trigger('click');
+        });
+        
+    </script>
+
+    
+    @endpush
 @endsection

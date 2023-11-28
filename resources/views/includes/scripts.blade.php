@@ -9,9 +9,10 @@
 	
 @stack('custum_js')
 <script>
-
-
-
+            $(window).on('load',function()    {    
+                $("#preloaders").fadeOut(1200); 
+            });
+ 
         var options1 = {
           series: [{
           name: 'Overused',
@@ -108,7 +109,15 @@
         });
 
 
-        function AjaxRequest(url,data)
+       
+
+    
+
+</script>
+<script>
+$( document ).ready(function() {
+
+    function AjaxRequest(url,data)
 {
     var res;
         $.ajax({
@@ -127,14 +136,7 @@
         });
         return res;
     }
-
-
     
-
-</script>
-<script>
-
-$( document ).ready(function() {
     $("input[name='datetimes']").daterangepicker(
         {},
         function (start, end, label) {
@@ -148,6 +150,7 @@ $( document ).ready(function() {
     );
 
     $('.toolbar button').click(function (){
+        $('.ajaxloader').fadeIn();
         var days =  $(this).val();
         var start_date =  $("input[name='start_date']").val()  === '' ? null : $("input[name='start_date']").val();
         var end_date =  $("input[name='end_date']").val() === '' ? null : $("input[name='end_date']").val() ;
@@ -165,6 +168,7 @@ $( document ).ready(function() {
         };
         var url = '{{route('water.ajax')}}';
         var res = AjaxRequest(url,data);
+       
         if(res.status==1)
         {       
             console.log(res);
@@ -224,6 +228,7 @@ $( document ).ready(function() {
                 },
             };
             $("#chart-timeline").html('');
+            $('.ajaxloader').fadeOut(500);
             var chart = new ApexCharts(document.querySelector("#chart-timeline"), options);
             chart.render();
         }else {

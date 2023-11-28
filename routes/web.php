@@ -51,8 +51,7 @@ Route::prefix('super-admin')->middleware(['auth', 'SuperAdmin'])->group(function
     //property Routes End
 
 
-    // Ajax Request
-    Route::post('/water_ajax', [AdminController::class, 'water_ajax'])->name('water.ajax');
+   
     
     //Appartment Routes start
     Route::get('/appartment/create', [AppartmentController::class, 'create'])->name('appartment.create');
@@ -61,13 +60,14 @@ Route::prefix('super-admin')->middleware(['auth', 'SuperAdmin'])->group(function
     //property Routes End
     
     //Device Routes Start
+     Route::get('/devices', [SensorDeviceController::class, 'index'])->name('device.index');
      Route::get('/device/create', [SensorDeviceController::class, 'create'])->name('device.create');
      Route::post('/device/store', [SensorDeviceController::class, 'store'])->name('device.store');
      Route::get('/device/edit/{id}', [SensorDeviceController::class, 'edit'])->name('device.edit');
     //Device Routes End
  
     //User Routes Start
-     Route::get('/user/index', [UserController::class, 'index'])->name('user.index');
+     Route::get('/users', [UserController::class, 'index'])->name('user.index');
      Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
      Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
      Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
@@ -89,6 +89,7 @@ Route::prefix('property-owner')->middleware(['auth', 'PropertyOwner'])->group(fu
     //Appartment Routes End
 
      //Device Routes Start
+     Route::get('/devices', [SensorDeviceController::class, 'index'])->name('propertyowner.device.index');
      Route::get('/device/create', [SensorDeviceController::class, 'create'])->name('propertyowner.device.create');
      Route::post('/device/store', [SensorDeviceController::class, 'store'])->name('propertyowner.device.store');
      Route::get('/device/edit/{id}', [SensorDeviceController::class, 'edit'])->name('propertyowner.device.edit');
@@ -117,4 +118,6 @@ Route::prefix('flat-owner')->middleware(['auth', 'Flatowner'])->group(function (
     Route::any('/webhook/{code}', [SensorDeviceController::class, 'webhook'])->name('webhook');
     Route::get('/user/password/{id}', [UserController::class, 'cofigure_password'])->name('user.cofigure_password');
     Route::post('/user/password', [UserController::class, 'cofigure_password_post'])->name('user.cofigure_password.post');
+     // Ajax Request
+     Route::post('/water_ajax', [AdminController::class, 'water_ajax'])->name('water.ajax')->middleware('auth');
 // });

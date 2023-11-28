@@ -12,6 +12,7 @@ use App\Models\TrackingsData;
 use App\Models\TrackingsPivotTable;
 use App\Http\Controllers\Controller;
 
+
 class AdminController extends Controller
 {
 
@@ -39,22 +40,33 @@ class AdminController extends Controller
         //  dd($appartment->trackings_data()->where('type','temp')->get()->toArray());
          $app_property = Property::find($appartment->property_id); 
          $appartments = Appartment::where('property_id' , $app_property ->id)->get(); 
-
-
-
         return view('superadmin.index', get_defined_vars());
     }
 
     public function water_ajax(Request $request)
-    {
-        
-        if($request->filter == 'Energy'){
-            $devices = SensorDevice::where('sensor_type_id' ,'1');
-        }elseif($request->filter == 'Gas'){
-            $devices = SensorDevice::where('sensor_type_id' ,'2');
+    {   
+        if(auth()->user()->role == 0){
+            if($request->filter == 'Energy'){
+                $devices = SensorDevice::where('sensor_type_id' ,'1');
+            }elseif($request->filter == 'Gas'){
+                $devices = SensorDevice::where('sensor_type_id' ,'2');
+            }else{
+                $devices = SensorDevice::where('sensor_type_id' ,'3');
+            }
         }else{
-            $devices = SensorDevice::where('sensor_type_id' ,'3');
+            $porp  = Property::where('user_id', auth()->user()->id)->get()->pluck('id');
+            
+            if($request->filter == 'Energy'){
+                $devices = SensorDevice::whereIn('property_id',$porp)->where('sensor_type_id' ,'1');
+            }elseif($request->filter == 'Gas'){
+                $devices = SensorDevice::whereIn('property_id',$porp)->where('sensor_type_id' ,'2');
+            }else{
+                $devices = SensorDevice::whereIn('property_id',$porp)->where('sensor_type_id' ,'3');
+            }
+           
         }
+
+       
         if($request->property_id != null){
         $devices = $devices->where('property_id', $request->property_id);
         }
@@ -62,7 +74,8 @@ class AdminController extends Controller
         $devices = $devices->where('appartment_id', $request->appartment_id);
         }
          $devices = $devices->get()->pluck('id')->toArray();
-        $t_records = TrackingsData::where('type','temp')
+
+         $t_records = TrackingsData::where('type','temp')
         ->where('name','Temperature')
         ->where('unit','c')
         ->whereIn('sensor_device_id',$devices);

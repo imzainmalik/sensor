@@ -21,7 +21,7 @@ class UserController extends Controller
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('role', function($row){ 
-                            $role = $row->role == 1 ? 'Property Owner' : 'Flat Owner';
+                            $role = $row->role == 1 ? 'Property Owner' : 'Appartment Owner';
                             return $role;
                     })
                     ->addColumn('action', function($row){

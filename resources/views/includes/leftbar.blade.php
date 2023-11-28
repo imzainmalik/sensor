@@ -1,25 +1,25 @@
 @if(auth()->check())
 <div class="panelBox widgets custom_right_box">
-    <div class="panel_head bluethemeCol">
+    <div class="panel_head bluethemeCol btn-rght">
        
           
         
-        <h3>Properties 
-           
-            @if(auth()->user()->role == 0)
-            <span><a href="{{ route('property.create') }}"><i class="fa-solid fa-plus" style="color: #ffffff;"></i></a></span>
-            @endif
-        </h3>
+        <h3>Properties</h3>
+        @if(auth()->user()->role == 0)
+        <span><a href="{{ route('property.create') }}" class="edit btn btn-success btn-sm"><i class="fa fa-plus" aria-hidden="true"></i></a></span>
+        @endif
         </div>
     <div class="panel_body">
-        <ul class="scrollData">
+        <ul class="scrollData" >
             
            @forelse ($properties as $prop) 
            @if(auth()->user()->role == 0)
-           <li><a href="{{ route('property.detail', $prop->id) }}" class="{{isset($app_property->id)  ?  $prop->id ==  $app_property->id ? 'active' : '' : '' }}">
-            {{ $prop->title }}
-        </a>
-    <h6><a href="{{ route('property.edit', $prop->id) }}">Edit</a></h6></li>
+           <li class="btn-rght">
+                <a href="{{ route('property.detail', $prop->id) }}" class="{{isset($app_property->id)  ?  $prop->id ==  $app_property->id ? 'active' : '' : '' }} ">
+                {{ $prop->title }}
+                </a>
+                <a href="{{ route('property.edit', $prop->id) }}"class="edit btn btn-success btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+            </li>
         @elseif(auth()->user()->role == 1)
            <li><a href="{{ route('propertyowner.property.detail', $prop->id) }}" class="{{isset($app_property->id)  ?  $prop->id ==  $app_property->id ? 'active' : '' : '' }}">
             {{ $prop->title }}

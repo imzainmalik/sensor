@@ -2,12 +2,13 @@
 @section('content')
     <div class="col-md-7 col-xl-8">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 ss">
                 <div class="panelBox widgets minheightSet">
                     <div class="panel_head greenthemeCol">
                         <h3>Resources</h3>
                     </div>
                     <div class="panel_body">
+                        <div class="ajaxloader"></div>
                         <div class="chartTitle">
                             @php
                                 $filter = 'Water';
@@ -26,44 +27,25 @@
                             <input type="hidden" id="startDate" name="start_date" value=""/>
                             <input type="hidden" id="endDate" name="end_date" value=""/>
                             <input type="hidden" id="filter" name="filter" value="{{ $filter }}"/>
-                            {{-- <div class="selectTT">
-                                <div class="selectPos">
-                                    <i class="fal fa-city"></i>
-                                </div>
-                   
-                                <select name="" id="">
-                                    @forelse ($properties as $property)
-                                    <option selected disabled value="">Select Properties</option>
-                                    <option value="{{ $property->id }}">{{ $property->title }}</option>
-                                    @empty 
-                                    <option selected disabled value="">Select Properties</option>
-                                    @endforelse
-                                </select>
-                            </div> --}}
-                            {{-- {{ Request::url().'?filter=Gas'}} --}}
+                         
                         </div>
                         <div id="chart">
                             <div class="chartstabs">
-                                <div class="toolbar">
+                                <div class="toolbar ">
                                     <button id="daily" value="daily">Daily</button>
                                     <button id="weekly" value="weekly" class="active">Weekly</button>
                                     <button id="monthly" value="monthly" >Monthly</button>
                                     <button id="yearly" value="yearly">Yearly</button>
                                 </div>
                                 <div class="selectSt">
-                                  
-                                    {{-- <input  id="datepicker" class="datechange" placeholder="Select Date" /> --}}
-                                    {{-- <div class="arrowD">
-                                        <i class="fal fa-angle-down"></i>
-                                    </div> --}}
                                 </div>
                             </div>
                             <div id="chart-timeline"></div>
                         </div>
-
                     </div>
                 </div>
             </div>
+         
             {{-- <div class="col-md-6">
                 <div class="panelBox widgets minheightSet">
                     <div class="panel_head greenthemeCol">
@@ -186,6 +168,29 @@
                 </div>
             </div>
         </div>
+        {{-- <div class="row">
+            <div class="col-md-6">
+                <div class="panelBox widgets minheightSet">
+                    <div class="panel_head greenthemeCol">
+                        <h3>Device List</h3>
+                    </div>
+                    <div class="panel_body">
+                            <table class="table table-bordered data-table"  style="color:white;  height:400px; " >
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Device Code</th>
+                                        <th width="50px">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                    </div>
+                </div>
+            </div>
+        </div> --}}
+       
     </div>
     @push('custum_js')
     <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -194,8 +199,11 @@
     <script>
         $(window).on('load',function() {
              $('.toolbar .active').trigger('click');
+             
         });
         
     </script>
+
+    
     @endpush
 @endsection
