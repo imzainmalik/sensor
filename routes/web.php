@@ -112,6 +112,7 @@ Route::prefix('flat-owner')->middleware(['auth', 'Flatowner'])->group(function (
     //Device Routes End
 });
 
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
 
 // Route::middleware(['auth'])->group(function () {

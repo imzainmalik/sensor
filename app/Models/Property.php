@@ -19,12 +19,12 @@ class Property extends Model
      */
     public function sensor_devices()
     {
-        return $this->hasOne(SensorDevice::class);
+        return $this->hasOne(SensorDevice::class, 'sensor_device_id');
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class , 'user_id');
     }
 }
 

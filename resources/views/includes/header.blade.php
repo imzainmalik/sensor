@@ -14,7 +14,7 @@
                     </figure>
                     <div class="userdetails">
                         <h5>{{ Auth::user()->name }}.</h5>
-                        <p>Admin</p>
+                        {{-- <p>Admin</p> --}}
                     </div>
                 </div>
                 @endif
@@ -36,11 +36,10 @@
                     {{-- <a class="themeBtn" href="{{ route('flatowner.device.index') }}" title="">Devices</a> --}}
                     @endif
                     {{-- <a class="themeBtn" href="javascript:;" title="">Contact Us</a> --}}
-                        <a href="{{ route('logout') }}" class="themeBtn" onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();">Logout</a> 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        <a href="{{ route('logout') }}" class="themeBtn">Logout</a> 
+                            {{-- <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
-                            </form>
+                            </form> --}}
                     @endif
                 </div>
             </div>

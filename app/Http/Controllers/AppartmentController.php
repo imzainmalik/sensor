@@ -25,6 +25,7 @@ class AppartmentController extends Controller
      public function create()
     {
         $appartment = null;
+        $users = User::where('role', 2)->get();
         if(auth()->user()->role == 0){
             $property_first = property::first();       
             $appartments = Appartment::get();
@@ -45,12 +46,14 @@ class AppartmentController extends Controller
             'name' => 'required',
             'address' => 'required',
             'property_id' => 'required',
+            'user_id' => 'required',
         ]);
             if($request->id){
                $appartment = Appartment::find($request->id);
                $appartment->name = $validated['name'];
                $appartment->address = $validated['address'];
                $appartment->property_id = $validated['property_id'];
+               $appartment->user_id = $validated['user_id'];
                $appartment->save();
                $notification = "Appartment Update Successfully";
             }else{
@@ -69,6 +72,7 @@ class AppartmentController extends Controller
      */
     public function edit($id)
     { 
+        $users = User::where('role', 2)->get();
         if(auth()->user()->role == 0){      
             $appartments = Appartment::get();
         }
