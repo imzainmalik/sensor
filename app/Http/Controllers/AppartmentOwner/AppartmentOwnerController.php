@@ -16,28 +16,28 @@ class AppartmentOwnerController extends Controller
     }
  
     public function index(){
-            $properties = property::where('user_id', auth()->user()->id )->get();        
-            $properties_ids = $properties->pluck('id')->toArray();  
-            $property_first = property::where('user_id', auth()->user()->id )->first();         
-            $appartments = Appartment::where('property_id', $properties_ids)->get(); 
+            // $properties = property::where('user_id', auth()->user()->id )->get();        
+            // $properties_ids = $properties->pluck('id')->toArray();  
+            // $property_first = property::where('user_id', auth()->user()->id )->first();         
+            // $appartments = Appartment::where('property_id', $properties_ids)->get(); 
+            $appartments = Appartment::where('user_id', auth()->user()->id)->get(); 
     
-        return view('appartmentOwner.index',compact('appartments', 'property_first', 'properties'));
+        return view('appartmentOwner.index',get_defined_vars());
     }
     
     public function property_detail($id){   
          $properties = property::where('user_id', auth()->user()->id )->get();     
          $app_property = property::find($id);   
          $appartments = Appartment::where('property_id' , $app_property->id)->get();
-        return view('appartmentOwner.index', compact('appartments', 'app_property', 'properties' ));
+        return view('appartmentOwner.index',get_defined_vars());
     }
 
     public function appartment_detail($id){
         
-        $properties = property::where('user_id', auth()->user()->id )->get();  
          $appartment = Appartment::find($id);   
-         $app_property = Property::find($appartment->property_id); 
-         $appartments = Appartment::where('property_id' , $app_property ->id)->get(); 
-        return view('appartmentOwner.index', compact('appartments', 'appartment', 'app_property' ,'properties'));
+
+         $appartments = Appartment::where('user_id', auth()->user()->id)->get(); 
+        return view('appartmentOwner.index', get_defined_vars());
     }
 
 

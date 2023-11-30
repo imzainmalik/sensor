@@ -16,11 +16,12 @@ class PropertyOwnerController extends Controller
     }
  
     public function index(Request $request){
-        $properties = property::where('user_id', auth()->user()->id )->get();        
+        
+        $properties = property::where('user_id', auth()->user()->id )->get();      
+    
         $properties_ids = $properties->pluck('id')->toArray();  
         $property_first = property::where('user_id', auth()->user()->id )->first();         
-        $appartments = Appartment::where('property_id', $properties_ids)->get(); 
-
+        $appartments = Appartment::whereIn('property_id', $properties_ids)->get(); 
         return view('propertyOwner.index',get_defined_vars());
     }
     

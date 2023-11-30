@@ -19,12 +19,23 @@ use Yajra\DataTables\DataTables;
 class SensorDeviceController extends Controller
 {
 
-    
+  
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {    
+
+        if(auth()->user()->role == 0){      
+            $appartments = Appartment::get();
+        }
+        else{
+            $properties = property::where('user_id', auth()->user()->id )->get();        
+            $properties_ids = $properties->pluck('id')->toArray();  
+            $property_first = property::where('user_id', auth()->user()->id )->first();         
+            $appartments = Appartment::whereIn('property_id', $properties_ids)->get(); 
+        } 
+  
       
         if ($request->ajax()) {
           if(auth()->user()->role == 0){
@@ -85,7 +96,7 @@ class SensorDeviceController extends Controller
             $properties = property::where('user_id', auth()->user()->id )->get();        
             $properties_ids = $properties->pluck('id')->toArray();  
             $property_first = property::where('user_id', auth()->user()->id )->first();         
-            $appartments = Appartment::where('property_id', $properties_ids)->get(); 
+            $appartments = Appartment::whereIn('property_id', $properties_ids)->get(); 
         }
         $device_types = SensorType::get(); 
         return view('devices.create', get_defined_vars());
@@ -95,7 +106,7 @@ class SensorDeviceController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required',
-            'device_code' => 'required',
+            'device_code' => 'required|unique:sensor_devices,device_code,'.(isset($request->id) ? $request->id : ''),
             'appartment_id' => 'required',
             'sensor_type_id' => 'required',
             'device_detail' => 'sometimes',
@@ -141,7 +152,17 @@ class SensorDeviceController extends Controller
      */
     public function edit($id)
     { 
-        $appartments = Appartment::get(); 
+        if(auth()->user()->role == 0){      
+            $appartments = Appartment::get();
+        }
+        else{
+            $properties = property::where('user_id', auth()->user()->id )->get();        
+            $properties_ids = $properties->pluck('id')->toArray();  
+            $property_first = property::where('user_id', auth()->user()->id )->first();         
+            $appartments = Appartment::whereIn('property_id', $properties_ids)->get(); 
+        } 
+  
+
         $device = SensorDevice::find($id); 
         $device_types = SensorType::get(); 
         return view('devices.create', get_defined_vars());
@@ -167,263 +188,263 @@ class SensorDeviceController extends Controller
         // $device = SensorDevice::where('device_code', $code)->first();
         // $trackingsdata = TrackingsData::where('sensor_device_id', $device->id)->get()->toArray();
         // dd($trackingsdata);
-        // $res = '{
-        //             "event_type": "uplink",
-        //             "event_data": {
-        //             "correlation_id": "b638aa9d-4121-40c4-a11a-53e3620f16f6",
-        //             "device_id": "4968da60-7fe9-11ee-8def-c5f402e436d9",
-        //             "user_id": "38375d20-899d-42cd-8d5a-733060e4235c",
-        //             "payload": [
-        //                 {
-        //                 "name": "Temperature",
-        //                 "sensor_id": "49973d60-7fe9-11ee-83a2-b1c2b63d0d7b",
-        //                 "type": "temp",
-        //                 "unit": "c",
-        //                 "value": -9.2,
-        //                 "channel": 3,
-        //                 "timestamp": 1699901654589
-        //                 },
-        //                 {
-        //                 "name": "Humidity",
-        //                 "sensor_id": "4998c400-7fe9-11ee-9411-3f2bf165898e",
-        //                 "type": "rel_hum",
-        //                 "unit": "p",
-        //                 "value": 37.3,
-        //                 "channel": 4,
-        //                 "timestamp": 1699901654589
-        //                 },
-        //                 {
-        //                 "name": "Probe",
-        //                 "sensor_id": "49978b80-7fe9-11ee-add4-6943212d3b27",
-        //                 "type": "temp",
-        //                 "unit": "c",
-        //                 "value": -12,
-        //                 "channel": 7,
-        //                 "timestamp": 1699901654589
-        //                 },
-        //                 {
-        //                 "name": "Battery",
-        //                 "sensor_id": "",
-        //                 "type": "batt",
-        //                 "unit": "p",
-        //                 "value": 10,
-        //                 "channel": 5,
-        //                 "timestamp": 1699901654589
-        //                 },
-        //                 {
-        //                 "name": "Battery Voltage",
-        //                 "sensor_id": "",
-        //                 "type": "batt",
-        //                 "unit": "p",
-        //                 "value": 2500,
-        //                 "channel": 500,
-        //                 "timestamp": 1699901654589
-        //                 },
-        //                 {
-        //                 "name": "Low Battery",
-        //                 "sensor_id": "49984ed0-7fe9-11ee-a9f0-f316592cd17e",
-        //                 "type": "low_battery",
-        //                 "unit": "d",
-        //                 "value": 1,
-        //                 "channel": 112,
-        //                 "timestamp": 1699901654589
-        //                 },
-        //                 {
-        //                 "name": "Local Backup",
-        //                 "sensor_id": "49954190-7fe9-11ee-bf93-ad773193810d",
-        //                 "type": "digital_sensor",
-        //                 "unit": "d",
-        //                 "value": 0,
-        //                 "channel": 400,
-        //                 "timestamp": 1699901654589
-        //                 }
-        //             ],
-        //             "gateways": [],
-        //             "fcnt": 0,
-        //             "fport": 1,
-        //             "raw_payload": "",
-        //             "raw_format": "json",
-        //             "client_id": "ee6a49f0-482f-11ee-a27e-13c1b4e7e92b",
-        //             "hardware_id": "sim-8a86-bd30-8b0f",
-        //             "timestamp": 1699901654589,
-        //             "application_id": "app$cmstest",
-        //             "device_type_id": "3b521800-7be0-11ed-8599-35b016c2af75",
-        //             "lora_datarate": 0,
-        //             "freq": 0
-        //             },
-        //             "company": {
-        //             "id": 35462,
-        //             "address": "los dasd",
-        //             "city": "LA",
-        //             "country": "United States",
-        //             "created_at": "2023-10-19T00:14:51Z",
-        //             "industry": "[]",
-        //             "latitude": 34.05491,
-        //             "longitude": -118.242645,
-        //             "name": "Appartment 2",
-        //             "state": "LA",
-        //             "status": 0,
-        //             "timezone": "America/Los_Angeles",
-        //             "updated_at": "2023-11-10T16:54:42Z",
-        //             "user_id": "38375d20-899d-42cd-8d5a-733060e4235c",
-        //             "zip": "77381",
-        //             "external_id": "770"
-        //             },
-        //             "location": {
-        //             "id": 48432,
-        //             "address": "los dasd",
-        //             "city": "LA",
-        //             "country": "United States",
-        //             "created_at": "2023-10-19T00:14:52Z",
-        //             "industry": "[]",
-        //             "latitude": 34.05491,
-        //             "longitude": -118.242645,
-        //             "name": "CMS TEAM",
-        //             "state": "LA",
-        //             "status": 0,
-        //             "timezone": "America/Los_Angeles",
-        //             "updated_at": "2023-10-19T00:14:52Z",
-        //             "user_id": "38375d20-899d-42cd-8d5a-733060e4235c",
-        //             "zip": "77381",
-        //             "external_id": "770",
-        //             "company_id": 35462
-        //             },
-        //             "device_type": {
-        //             "id": "3b521800-7be0-11ed-8599-35b016c2af75",
-        //             "application_id": "iotinabox",
-        //             "category": "module",
-        //             "codec": "lorawan.dragino.lht65.local.backup",
-        //             "data_type": "",
-        //             "description": "The Dragino LHT65 Temperature & Humidity sensor is a Long Range LoRaWAN Sensor. It includes a built-in SHT20 Temperature & Humidity sensor and has an external sensor connector to connect to external sensors such as Temperature Sensor, Soil Moisture Sensor, Tilting Sensor, etc. \n\nThe LHT65 allows users to send data and reach extremely long ranges. It provides ultra-long range spread spectrum communication and high interference immunity whilst minimizing current consumption. It targets professional wireless sensor network applications such as irrigation systems, smart metering, smart cities, building automation, and so on. \n\nLHT65 has a built-in 2400mAh non-chargeable battery which can be used for more than 10 years. \n\nLHT65 is full compatible with the LoRaWAN v1.0.2 protocol and works with any standard LoRaWAN gateway.",
-        //             "manufacturer": "Dragino",
-        //             "model": "LHT65",
-        //             "name": "A Dragino LHT65 Temp & Humidity 2.0 (Sample)",
-        //             "parent_constraint": "NOT_ALLOWED",
-        //             "proxy_handler": "PrometheusClient",
-        //             "subcategory": "lora",
-        //             "transport_protocol": "lorawan",
-        //             "version": "",
-        //             "created_at": "2022-12-14T18:50:51Z",
-        //             "updated_at": "2023-10-24T20:11:00Z"
-        //             },
-        //             "device": {
-        //             "id": 2476535,
-        //             "thing_name": "Refrigerator",
-        //             "sensor_use": "Refrigerator",
-        //             "created_at": "2023-11-10T16:50:43Z",
-        //             "updated_at": "2023-11-10T16:50:45Z",
-        //             "status": 0,
-        //             "external_id": ""
-        //             }
-        //         }';
-
-                $res = '{
-                    "event_type": "alert",
+        $res = '{
+                    "event_type": "uplink",
                     "event_data": {
-                      "correlation_id": "3ed8da60-7566-4681-bef2-210979ba505d",
-                      "userId": "38375d20-899d-42cd-8d5a-733060e4235c",
-                      "applicationId": "app$cmstest",
-                      "clientId": "ee6a49f0-482f-11ee-a27e-13c1b4e7e92b",
-                      "thingId": "8fd172d0-742e-11ee-b9f2-219eb6edfac3",
-                      "sensorId": "8ffcc890-742e-11ee-a5da-579bcf7b39d1",
-                      "channel": "3",
-                      "ruleId": "ceaa2c6f-67a2-4b50-8da2-1a1412ddd968",
-                      "eventType": "alert-state-changed",
-                      "totalTriggered": 4,
-                      "hardwareId": "sim-8258-b373-1797",
-                      "triggered": true,
-                      "value": "15.440000000000001",
-                      "timestamp": "1700862262613",
-                      "triggerData": {
-                        "delay": {
-                          "count": 1,
-                          "time": 600000
+                    "correlation_id": "b638aa9d-4121-40c4-a11a-53e3620f16f6",
+                    "device_id": "4968da60-7fe9-11ee-8def-c5f402e436d9",
+                    "user_id": "38375d20-899d-42cd-8d5a-733060e4235c",
+                    "payload": [
+                        {
+                        "name": "Temperature",
+                        "sensor_id": "49973d60-7fe9-11ee-83a2-b1c2b63d0d7b",
+                        "type": "temp",
+                        "unit": "c",
+                        "value": -9.2,
+                        "channel": 3,
+                        "timestamp": 1699901654589
                         },
-                        "trigger_reading": 15.440000000000001,
-                        "trigger_type": "trigger",
-                        "trigger_unit": "f",
-                        "triggers": [
-                          {
-                            "conditions": [
-                              {
-                                "operator": "lt",
-                                "value": 32
-                              }
-                            ],
-                            "trigger_reading": 15.440000000000001,
-                            "trigger_unit": "f",
-                            "triggers_combination": "OR"
-                          }
-                        ],
-                        "triggers_combination": "OR"
-                      },
-                      "title": "Refrigerator Temperature Alert"
+                        {
+                        "name": "Humidity",
+                        "sensor_id": "4998c400-7fe9-11ee-9411-3f2bf165898e",
+                        "type": "rel_hum",
+                        "unit": "p",
+                        "value": 37.3,
+                        "channel": 4,
+                        "timestamp": 1699901654589
+                        },
+                        {
+                        "name": "Probe",
+                        "sensor_id": "49978b80-7fe9-11ee-add4-6943212d3b27",
+                        "type": "temp",
+                        "unit": "c",
+                        "value": -12,
+                        "channel": 7,
+                        "timestamp": 1699901654589
+                        },
+                        {
+                        "name": "Battery",
+                        "sensor_id": "",
+                        "type": "batt",
+                        "unit": "p",
+                        "value": 10,
+                        "channel": 5,
+                        "timestamp": 1699901654589
+                        },
+                        {
+                        "name": "Battery Voltage",
+                        "sensor_id": "",
+                        "type": "batt",
+                        "unit": "p",
+                        "value": 2500,
+                        "channel": 500,
+                        "timestamp": 1699901654589
+                        },
+                        {
+                        "name": "Low Battery",
+                        "sensor_id": "49984ed0-7fe9-11ee-a9f0-f316592cd17e",
+                        "type": "low_battery",
+                        "unit": "d",
+                        "value": 1,
+                        "channel": 112,
+                        "timestamp": 1699901654589
+                        },
+                        {
+                        "name": "Local Backup",
+                        "sensor_id": "49954190-7fe9-11ee-bf93-ad773193810d",
+                        "type": "digital_sensor",
+                        "unit": "d",
+                        "value": 0,
+                        "channel": 400,
+                        "timestamp": 1699901654589
+                        }
+                    ],
+                    "gateways": [],
+                    "fcnt": 0,
+                    "fport": 1,
+                    "raw_payload": "",
+                    "raw_format": "json",
+                    "client_id": "ee6a49f0-482f-11ee-a27e-13c1b4e7e92b",
+                    "hardware_id": "sim-8a86-bd30-8b0f",
+                    "timestamp": 1699901654589,
+                    "application_id": "app$cmstest",
+                    "device_type_id": "3b521800-7be0-11ed-8599-35b016c2af75",
+                    "lora_datarate": 0,
+                    "freq": 0
                     },
                     "company": {
-                      "id": 33368,
-                      "address": "7421 Laurel Canyon Blvd STE18",
-                      "city": "North Hollywood",
-                      "country": "United States",
-                      "created_at": "2023-08-31T18:57:48Z",
-                      "industry": "\"[]\"",
-                      "latitude": 34.20549,
-                      "longitude": -118.397,
-                      "name": "Example Company",
-                      "state": "CA",
-                      "status": 0,
-                      "timezone": "America/Los_Angeles",
-                      "updated_at": "2023-08-31T18:57:48Z",
-                      "user_id": "38375d20-899d-42cd-8d5a-733060e4235c",
-                      "zip": "91605",
-                      "external_id": ""
+                    "id": 35462,
+                    "address": "los dasd",
+                    "city": "LA",
+                    "country": "United States",
+                    "created_at": "2023-10-19T00:14:51Z",
+                    "industry": "[]",
+                    "latitude": 34.05491,
+                    "longitude": -118.242645,
+                    "name": "Appartment 2",
+                    "state": "LA",
+                    "status": 0,
+                    "timezone": "America/Los_Angeles",
+                    "updated_at": "2023-11-10T16:54:42Z",
+                    "user_id": "38375d20-899d-42cd-8d5a-733060e4235c",
+                    "zip": "77381",
+                    "external_id": "770"
                     },
                     "location": {
-                      "id": 45939,
-                      "address": "7421 Laurel Canyon Blvd STE18",
-                      "city": "North Hollywood",
-                      "country": "United States",
-                      "created_at": "2023-08-31T18:57:49Z",
-                      "industry": "\"[]\"",
-                      "latitude": 34.20549,
-                      "longitude": -118.397,
-                      "name": "Example Location",
-                      "state": "CA",
-                      "status": 0,
-                      "timezone": "America/Los_Angeles",
-                      "updated_at": "2023-08-31T18:57:49Z",
-                      "user_id": "38375d20-899d-42cd-8d5a-733060e4235c",
-                      "zip": "91605",
-                      "external_id": "",
-                      "company_id": 33368
+                    "id": 48432,
+                    "address": "los dasd",
+                    "city": "LA",
+                    "country": "United States",
+                    "created_at": "2023-10-19T00:14:52Z",
+                    "industry": "[]",
+                    "latitude": 34.05491,
+                    "longitude": -118.242645,
+                    "name": "CMS TEAM",
+                    "state": "LA",
+                    "status": 0,
+                    "timezone": "America/Los_Angeles",
+                    "updated_at": "2023-10-19T00:14:52Z",
+                    "user_id": "38375d20-899d-42cd-8d5a-733060e4235c",
+                    "zip": "77381",
+                    "external_id": "770",
+                    "company_id": 35462
                     },
                     "device_type": {
-                      "id": "3b521800-7be0-11ed-8599-35b016c2af75",
-                      "application_id": "iotinabox",
-                      "category": "module",
-                      "codec": "lorawan.dragino.lht65.local.backup",
-                      "data_type": "",
-                      "description": "The Dragino LHT65 Temperature & Humidity sensor is a Long Range LoRaWAN Sensor. It includes a built-in SHT20 Temperature & Humidity sensor and has an external sensor connector to connect to external sensors such as Temperature Sensor, Soil Moisture Sensor, Tilting Sensor, etc. \n\nThe LHT65 allows users to send data and reach extremely long ranges. It provides ultra-long range spread spectrum communication and high interference immunity whilst minimizing current consumption. It targets professional wireless sensor network applications such as irrigation systems, smart metering, smart cities, building automation, and so on. \n\nLHT65 has a built-in 2400mAh non-chargeable battery which can be used for more than 10 years. \n\nLHT65 is full compatible with the LoRaWAN v1.0.2 protocol and works with any standard LoRaWAN gateway.",
-                      "manufacturer": "Dragino",
-                      "model": "LHT65",
-                      "name": "A Dragino LHT65 Temp & Humidity 2.0 (Sample)",
-                      "parent_constraint": "NOT_ALLOWED",
-                      "proxy_handler": "PrometheusClient",
-                      "subcategory": "lora",
-                      "transport_protocol": "lorawan",
-                      "version": "",
-                      "created_at": "2022-12-14T18:50:51Z",
-                      "updated_at": "2023-10-24T20:11:00Z"
+                    "id": "3b521800-7be0-11ed-8599-35b016c2af75",
+                    "application_id": "iotinabox",
+                    "category": "module",
+                    "codec": "lorawan.dragino.lht65.local.backup",
+                    "data_type": "",
+                    "description": "The Dragino LHT65 Temperature & Humidity sensor is a Long Range LoRaWAN Sensor. It includes a built-in SHT20 Temperature & Humidity sensor and has an external sensor connector to connect to external sensors such as Temperature Sensor, Soil Moisture Sensor, Tilting Sensor, etc. \n\nThe LHT65 allows users to send data and reach extremely long ranges. It provides ultra-long range spread spectrum communication and high interference immunity whilst minimizing current consumption. It targets professional wireless sensor network applications such as irrigation systems, smart metering, smart cities, building automation, and so on. \n\nLHT65 has a built-in 2400mAh non-chargeable battery which can be used for more than 10 years. \n\nLHT65 is full compatible with the LoRaWAN v1.0.2 protocol and works with any standard LoRaWAN gateway.",
+                    "manufacturer": "Dragino",
+                    "model": "LHT65",
+                    "name": "A Dragino LHT65 Temp & Humidity 2.0 (Sample)",
+                    "parent_constraint": "NOT_ALLOWED",
+                    "proxy_handler": "PrometheusClient",
+                    "subcategory": "lora",
+                    "transport_protocol": "lorawan",
+                    "version": "",
+                    "created_at": "2022-12-14T18:50:51Z",
+                    "updated_at": "2023-10-24T20:11:00Z"
                     },
                     "device": {
-                      "id": 2354888,
-                      "thing_name": "Refrigerator",
-                      "sensor_use": "Refrigerator",
-                      "created_at": "2023-10-26T18:36:22Z",
-                      "updated_at": "2023-10-26T18:36:25Z",
-                      "status": 0,
-                      "external_id": ""
+                    "id": 2476535,
+                    "thing_name": "Refrigerator",
+                    "sensor_use": "Refrigerator",
+                    "created_at": "2023-11-10T16:50:43Z",
+                    "updated_at": "2023-11-10T16:50:45Z",
+                    "status": 0,
+                    "external_id": ""
                     }
-                  }';
+                }';
+
+                // $res = '{
+                //     "event_type": "alert",
+                //     "event_data": {
+                //       "correlation_id": "3ed8da60-7566-4681-bef2-210979ba505d",
+                //       "userId": "38375d20-899d-42cd-8d5a-733060e4235c",
+                //       "applicationId": "app$cmstest",
+                //       "clientId": "ee6a49f0-482f-11ee-a27e-13c1b4e7e92b",
+                //       "thingId": "8fd172d0-742e-11ee-b9f2-219eb6edfac3",
+                //       "sensorId": "8ffcc890-742e-11ee-a5da-579bcf7b39d1",
+                //       "channel": "3",
+                //       "ruleId": "ceaa2c6f-67a2-4b50-8da2-1a1412ddd968",
+                //       "eventType": "alert-state-changed",
+                //       "totalTriggered": 4,
+                //       "hardwareId": "sim-8258-b373-1797",
+                //       "triggered": true,
+                //       "value": "15.440000000000001",
+                //       "timestamp": "1700862262613",
+                //       "triggerData": {
+                //         "delay": {
+                //           "count": 1,
+                //           "time": 600000
+                //         },
+                //         "trigger_reading": 15.440000000000001,
+                //         "trigger_type": "trigger",
+                //         "trigger_unit": "f",
+                //         "triggers": [
+                //           {
+                //             "conditions": [
+                //               {
+                //                 "operator": "lt",
+                //                 "value": 32
+                //               }
+                //             ],
+                //             "trigger_reading": 15.440000000000001,
+                //             "trigger_unit": "f",
+                //             "triggers_combination": "OR"
+                //           }
+                //         ],
+                //         "triggers_combination": "OR"
+                //       },
+                //       "title": "Refrigerator Temperature Alert"
+                //     },
+                //     "company": {
+                //       "id": 33368,
+                //       "address": "7421 Laurel Canyon Blvd STE18",
+                //       "city": "North Hollywood",
+                //       "country": "United States",
+                //       "created_at": "2023-08-31T18:57:48Z",
+                //       "industry": "\"[]\"",
+                //       "latitude": 34.20549,
+                //       "longitude": -118.397,
+                //       "name": "Example Company",
+                //       "state": "CA",
+                //       "status": 0,
+                //       "timezone": "America/Los_Angeles",
+                //       "updated_at": "2023-08-31T18:57:48Z",
+                //       "user_id": "38375d20-899d-42cd-8d5a-733060e4235c",
+                //       "zip": "91605",
+                //       "external_id": ""
+                //     },
+                //     "location": {
+                //       "id": 45939,
+                //       "address": "7421 Laurel Canyon Blvd STE18",
+                //       "city": "North Hollywood",
+                //       "country": "United States",
+                //       "created_at": "2023-08-31T18:57:49Z",
+                //       "industry": "\"[]\"",
+                //       "latitude": 34.20549,
+                //       "longitude": -118.397,
+                //       "name": "Example Location",
+                //       "state": "CA",
+                //       "status": 0,
+                //       "timezone": "America/Los_Angeles",
+                //       "updated_at": "2023-08-31T18:57:49Z",
+                //       "user_id": "38375d20-899d-42cd-8d5a-733060e4235c",
+                //       "zip": "91605",
+                //       "external_id": "",
+                //       "company_id": 33368
+                //     },
+                //     "device_type": {
+                //       "id": "3b521800-7be0-11ed-8599-35b016c2af75",
+                //       "application_id": "iotinabox",
+                //       "category": "module",
+                //       "codec": "lorawan.dragino.lht65.local.backup",
+                //       "data_type": "",
+                //       "description": "The Dragino LHT65 Temperature & Humidity sensor is a Long Range LoRaWAN Sensor. It includes a built-in SHT20 Temperature & Humidity sensor and has an external sensor connector to connect to external sensors such as Temperature Sensor, Soil Moisture Sensor, Tilting Sensor, etc. \n\nThe LHT65 allows users to send data and reach extremely long ranges. It provides ultra-long range spread spectrum communication and high interference immunity whilst minimizing current consumption. It targets professional wireless sensor network applications such as irrigation systems, smart metering, smart cities, building automation, and so on. \n\nLHT65 has a built-in 2400mAh non-chargeable battery which can be used for more than 10 years. \n\nLHT65 is full compatible with the LoRaWAN v1.0.2 protocol and works with any standard LoRaWAN gateway.",
+                //       "manufacturer": "Dragino",
+                //       "model": "LHT65",
+                //       "name": "A Dragino LHT65 Temp & Humidity 2.0 (Sample)",
+                //       "parent_constraint": "NOT_ALLOWED",
+                //       "proxy_handler": "PrometheusClient",
+                //       "subcategory": "lora",
+                //       "transport_protocol": "lorawan",
+                //       "version": "",
+                //       "created_at": "2022-12-14T18:50:51Z",
+                //       "updated_at": "2023-10-24T20:11:00Z"
+                //     },
+                //     "device": {
+                //       "id": 2354888,
+                //       "thing_name": "Refrigerator",
+                //       "sensor_use": "Refrigerator",
+                //       "created_at": "2023-10-26T18:36:22Z",
+                //       "updated_at": "2023-10-26T18:36:25Z",
+                //       "status": 0,
+                //       "external_id": ""
+                //     }
+                //   }';
             $response = json_decode($res);
               
                 if($response->event_type == 'uplink'){

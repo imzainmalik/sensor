@@ -52,7 +52,7 @@ class UserController extends Controller
         //
         $validated = $request->validate([
             'name' => 'required',
-            'email' => 'required|unique:users',
+            'email' => 'required|unique:users,email,' . (isset($request->id) ? $request->id : ''),
             'role' => 'required',
         ]);
             if($request->id){
@@ -95,7 +95,7 @@ class UserController extends Controller
         //
     }
     public function cofigure_password($id)
-    {
+    {     $id =  decrypt($id);
         $user = User::where('id',$id)->first();
         if(!$user){
             abort(404);

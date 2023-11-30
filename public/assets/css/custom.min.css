@@ -274,7 +274,7 @@ span.apexcharts-legend-text{ color: #fff !important;  font-family: 'Poppins', sa
 .selectTT select{background: transparent;border: none;outline: none;color: #fff;font-size: 13px;height: 100%;width: 100%;padding: 5px 35px; padding-left: 40px; -webkit-appearance: none; }
 .selectTT select option{ color: var(--black); }
 .selectTT:before{ content: '\f107'; font-family: 'Font Awesome 5 Pro'; font-weight: 300; font-size: 25px; color: var(--green-color); position: absolute; right: 10px; z-index: -1; }
-.custom_right_box{ height: auto; overflow: scroll; } 
+.custom_right_box{ height: auto; overflow: auto; } 
 
 .btn-success { color: #fff !important; background-color: #00C17B !important; border-color: #00C17B !important;}
 

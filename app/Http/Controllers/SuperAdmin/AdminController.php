@@ -53,7 +53,7 @@ class AdminController extends Controller
             }else{
                 $devices = SensorDevice::where('sensor_type_id' ,'3');
             }
-        }else{
+        }elseif(auth()->user()->role == 1){
             $porp  = Property::where('user_id', auth()->user()->id)->get()->pluck('id');
             
             if($request->filter == 'Energy'){
@@ -62,6 +62,17 @@ class AdminController extends Controller
                 $devices = SensorDevice::whereIn('property_id',$porp)->where('sensor_type_id' ,'2');
             }else{
                 $devices = SensorDevice::whereIn('property_id',$porp)->where('sensor_type_id' ,'3');
+            }
+           
+        }elseif(auth()->user()->role == 2){
+            $app  = Appartment::where('user_id', auth()->user()->id)->get()->pluck('id');
+            
+            if($request->filter == 'Energy'){
+                $devices = SensorDevice::whereIn('appartment_id', $app )->where('sensor_type_id' ,'1');
+            }elseif($request->filter == 'Gas'){
+                $devices = SensorDevice::whereIn('appartment_id',$app)->where('sensor_type_id' ,'2');
+            }else{
+                $devices = SensorDevice::whereIn('appartment_id',$app)->where('sensor_type_id' ,'3');
             }
            
         }

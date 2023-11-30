@@ -1,72 +1,44 @@
 @if(auth()->check())
+
+
+
+@if(auth()->user()->role != 2)
 <div class="panelBox widgets custom_right_box">
     <div class="panel_head bluethemeCol btn-rght">
-       
-          
         
         <h3>Properties</h3>
         @if(auth()->user()->role == 0)
         <span><a href="{{ route('property.create') }}" class="edit btn btn-success btn-sm"><i class="fa fa-plus" aria-hidden="true"></i></a></span>
         @endif
         </div>
-    <div class="panel_body">
-        <ul class="scrollData" >
-            
+       <div class="panel_body">
+        <ul class="scrollData">
            @forelse ($properties as $prop) 
-           @if(auth()->user()->role == 0)
-           <li class="btn-rght">
-                <a href="{{ route('property.detail', $prop->id) }}" class="{{isset($app_property->id)  ?  $prop->id ==  $app_property->id ? 'active' : '' : '' }} ">
-                {{ $prop->title }}
-                </a>
-                <a href="{{ route('property.edit', $prop->id) }}"class="edit btn btn-success btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-            </li>
-        @elseif(auth()->user()->role == 1)
-           <li><a href="{{ route('propertyowner.property.detail', $prop->id) }}" class="{{isset($app_property->id)  ?  $prop->id ==  $app_property->id ? 'active' : '' : '' }}">
-            {{ $prop->title }}
-        </a></li>
-        @else
-        <li><a href="{{ route('flatowner.property.detail', $prop->id) }}" class="{{isset($app_property->id)  ?  $prop->id ==  $app_property->id ? 'active' : '' : '' }}">
-            {{ $prop->title }}
-        </a></li>
-        {{-- <li><a href="{{ route('property.detail', $prop->id) }}" class="{{isset($app_property->id)  ?  $prop->id ==  $app_property->id ? 'active' : '' : '' }}">
-            {{ $prop->title }}
-        </a></li> --}}
-        @endif
-           @empty 
-             <li>No Property Found</li>
+            @if(auth()->user()->role == 0)
+                <li class="btn-rght">
+                    <a href="{{ route('property.detail', $prop->id) }}" class="{{isset($app_property->id)  ?  $prop->id ==  $app_property->id ? 'active' : '' : '' }} ">
+                    {{ $prop->title }}
+                    </a>
+                    <a href="{{ route('property.edit', $prop->id) }}"class="edit btn btn-success btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                </li>
+            @elseif(auth()->user()->role == 1)
+                <li><a href="{{ route('propertyowner.property.detail', $prop->id) }}" class="{{isset($app_property->id)  ?  $prop->id ==  $app_property->id ? 'active' : '' : '' }}">
+                    {{ $prop->title }}
+                </a></li>
+            @else
+                <li><a href="{{ route('flatowner.property.detail', $prop->id) }}" class="{{isset($app_property->id)  ?  $prop->id ==  $app_property->id ? 'active' : '' : '' }}">
+                    {{ $prop->title }}
+                </a></li>
+            @endif
+            @empty 
+                <li>No Property Found</li>
            @endforelse
          
-            {{-- <li>Sunset Apartments</li>
-            <li>Deluxe Villas</li>
-            <li>Geo Condos</li>
-            <li>JBL Properties</li>
-            <li>Sunset Apartments</li>
-            <li>Deluxe Villas</li>
-            <li>Geo Condos</li>
-            <li>JBL Properties</li>
-
-            <li>JBL Properties</li>
-            <li>Sunset Apartments</li>
-            <li>Deluxe Villas</li>
-            <li>Geo Condos</li>
-            <li>JBL Properties</li>
-            <li>Sunset Apartments</li>
-            <li>Deluxe Villas</li>
-            <li>Geo Condos</li>
-            <li>JBL Properties</li>
-            
-            <li>JBL Properties</li>
-            <li>Sunset Apartments</li>
-            <li>Deluxe Villas</li>
-            <li>Geo Condos</li>
-            <li>JBL Properties</li>
-            <li>Sunset Apartments</li>
-            <li>Deluxe Villas</li>
-            <li>Geo Condos</li>
-            <li>JBL Properties</li> --}}
+         
         </ul>
     </div>
 </div>
+@endif
 
 <div class="panelBox widgets">
     <div class="panel_head bluethemeCol">
