@@ -27,7 +27,6 @@
                             <input type="hidden" id="startDate" name="start_date" value=""/>
                             <input type="hidden" id="endDate" name="end_date" value=""/>
                             <input type="hidden" id="filter" name="filter" value="{{ $filter }}"/>
-                         
                         </div>
                         <div id="chart">
                             <div class="chartstabs">
@@ -45,7 +44,6 @@
                     </div>
                 </div>
             </div>
-         
             {{-- <div class="col-md-6">
                 <div class="panelBox widgets minheightSet">
                     <div class="panel_head greenthemeCol">
@@ -190,20 +188,12 @@
                 </div>
             </div>
         </div> --}}
-       
     </div>
     @push('custum_js')
-    <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-   
     <script>
         $(window).on('load',function() {
              $('.toolbar .active').trigger('click');
-             
         });
-        
     </script>
-
-    
     @endpush
 @endsection

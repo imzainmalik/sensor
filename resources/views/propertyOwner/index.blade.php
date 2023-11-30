@@ -8,6 +8,7 @@
                         <h3>Resources</h3>
                     </div>
                     <div class="panel_body">
+                        <div class="ajaxloader"></div>
                         <div class="chartTitle">
                             @php
                                 $filter = 'Water';
@@ -183,16 +184,11 @@
         </div>
     </div>
     @push('custum_js')
-    <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-   
     <script>
         $(window).on('load',function() {
              $('.toolbar .active').trigger('click');
         });
         
     </script>
-
-    
     @endpush
 @endsection

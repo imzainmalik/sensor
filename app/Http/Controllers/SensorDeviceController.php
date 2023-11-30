@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use Mail;
+use App\Models\Alert;
 use App\Models\property;
 use App\Models\Appartment;
 use App\Models\SensorType;
@@ -37,7 +39,7 @@ class SensorDeviceController extends Controller
                   ->addIndexColumn()
                   ->addColumn('property_name', function($row){
                    
-                          $property_name = $row ? $row->properties->title : 'None';
+                          $property_name = $row->properties ? $row->properties->title : 'None';
                           return $property_name;
                   })
                   ->addColumn('appartment_name', function($row){
@@ -424,37 +426,52 @@ class SensorDeviceController extends Controller
                   }';
             $response = json_decode($res);
               
-            if($response->event_type == 'uplink'){
-                $flat_id = 3;
-                // dd($response->event_data->hardware_id, 'sim-8a86-bd30-c4a3');
-                $device = SensorDevice::where('device_code', $response->event_data->hardware_id)->first();
-                // dd($device);
-                if($device)
-                {
-                    $data = $response->event_data;
-                    foreach($data->payload as $item ){
-                       $trackingsdata = TrackingsData::create([
-                            'name' => 	$item->name,
-                            'value' =>	$item->value,
-                            'type' =>	$item->type,
-                            'unit'=>	$item->unit,
-                            'sensor_device_id'=>	$device->id,
-                            'created_at' => Carbon::now()->format('Y-m-d H:i:s e'),
-                            'updated_at' => Carbon::now()->format('Y-m-d H:i:s e'),
-                        ]);
-                        
-                    }   
+                if($response->event_type == 'uplink'){
+                   
+                    $device = SensorDevice::where('device_code', $response->event_data->hardware_id)->first();
+                    // dd($device);
+                    if($device)
+                    {
+                        $data = $response->event_data;
+                        foreach($data->payload as $item ){
+                          $trackingsdata = TrackingsData::create([
+                                'name' => 	$item->name,
+                                'value' =>	$item->value,
+                                'type' =>	$item->type,
+                                'unit'=>	$item->unit,
+                                'sensor_device_id'=>	$device->id,
+                                'created_at' => Carbon::now()->format('Y-m-d H:i:s e'),
+                                'updated_at' => Carbon::now()->format('Y-m-d H:i:s e'),
+                            ]);
+                            
+                        }   
+                    }
+                }elseif($response->event_type == 'alert'){
+                    $device = SensorDevice::where('device_code', $response->event_data->hardwareId)->first();
+                    // dd($device->properties->user->email, $device->appartments->user->email);
+                      if($device)
+                      {
+                        $alert = Alert::Where('senor_device_id', $device->id)->first();
+                        $data = [];
+                        if($alert){
+                            $alert->title = $response->event_data->title;
+                            $alert->value = $response->event_data->triggerData->trigger_reading;
+                            $alert->unit = $response->event_data->triggerData->trigger_unit;
+                            $alert->save();
+                        }else{
+                          $alert = new Alert();
+                          $alert->title = $response->event_data->title;
+                          $alert->senor_device_id =  $device->id;
+                          $alert->value = $response->event_data->triggerData->trigger_reading;
+                          $alert->unit = $response->event_data->triggerData->trigger_unit;
+                          $alert->save();
+                        }
+                        $data['device'] = $device->toArray();
+                        $data['alert'] = $alert->toArray();
+                        Mail::to('developerlegendesk@gmail.com')->send(new \App\Mail\AlertMail($data));
+                      }
+                }else{
                 }
-            }elseif($response->event_type == 'alert'){
-              $device = SensorDevice::where('device_code', $response->event_data->hardwareId)->first();
-   
-                if($device)
-                {
-                    dd($response->event_data->triggerData->trigger_reading,  $response->event_data->triggerData->trigger_unit);
-                }
-                // dd('sim-8258-b373-1797');
-            }else{
-            }
 
 
         //

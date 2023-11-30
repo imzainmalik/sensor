@@ -66,7 +66,6 @@ class AdminController extends Controller
            
         }
 
-       
         if($request->property_id != null){
         $devices = $devices->where('property_id', $request->property_id);
         }
@@ -103,8 +102,7 @@ class AdminController extends Controller
                 }
                 $groupedData[$day][] = (float)$entry['value'];
             }
-
-
+            
        
         foreach ($groupedData as $day => $values) {
             $average = count($values) > 0 ? array_sum($values) / count($values) : 0;
@@ -112,11 +110,6 @@ class AdminController extends Controller
             $days[] = $day;
         }
 
-
-
-
-
-        
 
         return response()->json(['status' => 1 , 'days' => $days , 'averages'=>$averages ]);
         

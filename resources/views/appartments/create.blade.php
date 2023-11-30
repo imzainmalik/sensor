@@ -48,6 +48,16 @@
                                   </div>
                                 <br>
                                 <div class="">
+                                  <label for="inputAddress">Appartment Onwer</label>
+                                  <select  class="form-control" name="user_id" id="cars">
+                                    @foreach ($users as $user) 
+                                        <option value="{{ $user->id }}" {{ $appartment ? $appartment->user_id == $user->id ? 'selected' : '' : '' }}>{{ $user->name }}</option>
+                                    @endforeach
+                                  </select>
+                                  {{-- <input type="text" class="form-control" id="inputAddress" name="address" placeholder="1234 Main St"> --}}
+                                </div>
+                                <br>
+                                <div class="">
                                   <label for="inputAddress">Property</label>
                                   <select  class="form-control" name="property_id" id="cars">
                 
