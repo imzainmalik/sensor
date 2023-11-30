@@ -18,7 +18,7 @@ class PropertyController extends Controller
         $property = null;
         $property_first = property::first();       
         $appartments = Appartment::get(); 
-        $users = User::where('role' , '!=' , 0)->get();
+        $users = User::where('role' , 1)->get();
         return view('properties.create', get_defined_vars());
     }   
 
@@ -52,7 +52,7 @@ class PropertyController extends Controller
         $property_first = property::first();       
         $appartments = Appartment::get(); 
         $property = property::find($id); 
-        $users = User::where('role' , '!=' , 0)->get();
+        $users = User::where('role' , 1)->get();
         return view('properties.create', get_defined_vars());
     }   
 
