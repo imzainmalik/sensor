@@ -68,7 +68,7 @@ class UserController extends Controller
                     'password' => Hash::make('password'),
                     'role' => $validated['role'],
                 ]);
-                Mail::to('junaid.shoaib@legendesk.com')->send(new \App\Mail\UserMail($user));
+                Mail::to('developerlegendesk@gmail.com')->send(new \App\Mail\UserMail($user));
                 $notification = "User Create Successfully";
             }
         return redirect()->route('user.index')->with('message', $notification);
